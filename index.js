@@ -7,6 +7,7 @@ const defaults = {
   headers: null,
   mapHeaders: ({ header }) => header,
   mapValues: ({ value }) => value,
+  getMapValue: null,
   newline: '\n',
   quote: '"',
   raw: false,
@@ -43,7 +44,8 @@ class CsvParser extends Transform {
       lineNumber: 0,
       previousEnd: 0,
       rowLength: 0,
-      quoted: false
+      quoted: false,
+      cellMapValues: options.getMapValue ? [] : undefined
     }
 
     this._prev = null
@@ -87,7 +89,8 @@ class CsvParser extends Transform {
   }
 
   parseLine (buffer, start, end) {
-    const { customNewline, escape, mapHeaders, mapValues, quote, separator, skipComments, skipLines } = this.options
+    const { state } = this
+    const { customNewline, escape, mapHeaders, mapValues, getMapValue, quote, separator, skipComments, skipLines } = this.options
 
     end-- // trim newline
     if (!customNewline && buffer.length && buffer[end - 1] === cr) {
@@ -106,16 +109,24 @@ class CsvParser extends Transform {
       }
     }
 
-    const mapValue = (value) => {
-      if (this.state.first) {
-        return value
+    const mapValue = getMapValue
+      ? (value) => {
+        if (state.first) {
+          return value
+        }
+
+        return state.cellMapValues[cells.length](value)
       }
+      : (value) => {
+        if (state.first) {
+          return value
+        }
 
-      const index = cells.length
-      const header = this.headers[index]
+        const index = cells.length
+        const header = this.headers[index]
 
-      return mapValues({ header, index, value })
-    }
+        return mapValues({ header, index, value })
+      }
 
     for (let i = start; i < end; i++) {
       const isStartingQuote = !isQuoted && buffer[i] === quote
@@ -145,16 +156,22 @@ class CsvParser extends Transform {
     }
 
     if (buffer[end - 1] === comma) {
-      cells.push(mapValue(this.state.empty))
+      cells.push(mapValue(state.empty))
     }
 
-    const skip = skipLines && skipLines > this.state.lineNumber
-    this.state.lineNumber++
+    const skip = skipLines && skipLines > state.lineNumber
+    state.lineNumber++
 
-    if (this.state.first && !skip) {
-      this.state.first = false
+    if (state.first && !skip) {
+      state.first = false
       this.headers = cells.map((header, index) => mapHeaders({ header, index }))
-
+      if (getMapValue) {
+        const colEnd = cells.length
+        const passthru = val => val
+        for (let i = 0; i < colEnd; i++) {
+          state.cellMapValues.push(getMapValue({ header: cells[i], index: i }) || passthru)
+        }
+      }
       this.emit('headers', this.headers)
       return
     }
