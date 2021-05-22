@@ -1,17 +1,30 @@
-[tests]: 	http://img.shields.io/travis/mafintosh/csv-parser.svg
-[tests-url]: http://travis-ci.org/mafintosh/csv-parser
+[comment]: <> ([tests]: 	http://img.shields.io/travis/mafintosh/csv-parser.svg)
 
-[cover]: https://codecov.io/gh/mafintosh/csv-parser/branch/master/graph/badge.svg
-[cover-url]: https://codecov.io/gh/mafintosh/csv-parser
+[comment]: <> ([tests-url]: http://travis-ci.org/mafintosh/csv-parser)
 
-[size]: https://packagephobia.now.sh/badge?p=csv-parser
-[size-url]: https://packagephobia.now.sh/result?p=csv-parser
+[comment]: <> ([cover]: https://codecov.io/gh/mafintosh/csv-parser/branch/master/graph/badge.svg)
 
-# csv-parser
+[comment]: <> ([cover-url]: https://codecov.io/gh/mafintosh/csv-parser)
 
-[![tests][tests]][tests-url]
-[![cover][cover]][cover-url]
-[![size][size]][size-url]
+[comment]: <> ([size]: https://packagephobia.now.sh/badge?p=csv-parser)
+
+[comment]: <> ([size-url]: https://packagephobia.now.sh/result?p=csv-parser)
+
+# @krisdages/csv-parser
+
+This is an unsupported fork of [csv-parser](https://github.com/mafintosh/csv-parser) that adds a 
+`getMapValue` option for specifying specific functions to use for mapping particular columns instead
+of a single `mapValues` function called for each value. 
+
+TODO: Document, possibly PR
+
+----
+
+[comment]: <> ([![tests][tests]][tests-url])
+
+[comment]: <> ([![cover][cover]][cover-url])
+
+[comment]: <> ([![size][size]][size-url])
 
 Streaming CSV parser that aims for maximum speed as well as compatibility with
 the [csv-spectrum](https://npmjs.org/csv-spectrum) CSV acid test suite.
@@ -22,8 +35,9 @@ to benchmark your data.
 
 `csv-parser` can be used in the browser with [browserify](http://browserify.org/).
 
-[neat-csv](https://github.com/sindresorhus/neat-csv) can be used if a `Promise`
-based interface to `csv-parser` is needed.
+[comment]: <> ([neat-csv]&#40;https://github.com/sindresorhus/neat-csv&#41; can be used if a `Promise`)
+
+[comment]: <> (based interface to `csv-parser` is needed.)
 
 _Note: This module requires Node v8.16.0 or higher._
 
@@ -67,13 +81,13 @@ _Note: This module requires Node v8.16.0 or higher._
 Using npm:
 
 ```console
-$ npm install csv-parser
+$ npm install @krisdages/csv-parser
 ```
 
 Using yarn:
 
 ```console
-$ yarn add csv-parser
+$ yarn add @krisdages/csv-parser
 ```
 
 ## Usage

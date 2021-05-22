@@ -1,15 +1,18 @@
 {
-  "name": "csv-parser",
-  "version": "3.0.0",
+  "name": "@krisdages/csv-parser",
+  "version": "3.0.0-get-map-value.1",
   "description": "Streaming CSV parser that aims for maximum speed as well as compatibility with the csv-spectrum test suite",
   "license": "MIT",
-  "repository": "mafintosh/csv-parser",
+  "repository": "krisdages/csv-parser",
   "author": "mafintosh",
   "maintainers": [
     "Andrew Powell <andrew@shellscape.org>"
   ],
-  "homepage": "https://github.com/mafintosh/csv-parser",
-  "bugs": "https://github.com/mafintosh/csv-parser/issues",
+  "contributors": [
+    "Kris Dages <kris.dages@git.whiteboxsoftware.net>"
+  ],
+  "homepage": "https://github.com/krisdages/csv-parser/tree/scoped/get-map-value",
+  "bugs": "https://github.com/krisdages/csv-parser/issues",
   "bin": {
     "csv-parser": "./bin/csv-parser"
   },
