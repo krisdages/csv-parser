@@ -57,6 +57,19 @@ Bugs Bunny,22
     readonly mapValues?: (args: { header: string; index: number; value: any }) => any;
 
     /**
+     * A function that can be used to get a function for mapping the value of a particular column.
+     * Typically more efficient than using mapValues, as the mapping function is only called for columns that need it
+     * instead of every value.
+     *
+     * @example
+     *
+     * csv({
+     *   getMapValue: ({ header, index }) => header === "someNumber" ? convertToNumber : undefined
+     * });
+     */
+    readonly getMapValue?: (args: { header: string; index: number }) => null | undefined | ((value: any) => any);
+
+    /**
      * Specifies a single-character string to denote the end of a line in a CSV file.
      *
      * @default '\n'
